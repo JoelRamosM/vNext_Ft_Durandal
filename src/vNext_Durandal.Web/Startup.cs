@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNet.Builder;
+﻿using System;
+using Microsoft.AspNet.Builder;
 using Microsoft.Framework.DependencyInjection;
 using vNext_Durandal.Web.Configuration;
 

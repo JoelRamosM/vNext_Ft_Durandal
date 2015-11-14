@@ -40,7 +40,24 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BO\Commom\MovimentacaoBO.cs" />
+    <Compile Include="BO\ReceitaBO.cs" />
+    <Compile Include="Enums\TipoCategoria.cs" />
+    <Compile Include="Enums\TipoMovimentacao.cs" />
+    <Compile Include="Intefaces\BO\IDespesaBO.cs" />
+    <Compile Include="Intefaces\BO\IMovimentacaoBO.cs" />
+    <Compile Include="Intefaces\BO\IReceitaBO.cs" />
+    <Compile Include="Intefaces\Repository\IDespesaRepository.cs" />
+    <Compile Include="Intefaces\Repository\IReceitaRepository.cs" />
+    <Compile Include="Models\Movimentacao.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\vNext_Durandal.Commom\vNext_Durandal.Commom.csproj">
+      <Project>{9A15B05F-AFD6-43AD-B525-A7B5D9596EF6}</Project>
+      <Name>vNext_Durandal.Commom</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

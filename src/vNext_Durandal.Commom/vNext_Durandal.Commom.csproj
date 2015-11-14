@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{D3A49F91-710F-4B8F-A835-DD5E4A821E22}</ProjectGuid>
+    <ProjectGuid>{9A15B05F-AFD6-43AD-B525-A7B5D9596EF6}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>vNext_Durandal.Data</RootNamespace>
-    <AssemblyName>vNext_Durandal.Data</AssemblyName>
+    <RootNamespace>vNext_Durandal.Commom</RootNamespace>
+    <AssemblyName>vNext_Durandal.Commom</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -49,30 +49,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Configuration\EntitiesConfiguration\Commom\EntityBaseMap.cs" />
-    <Compile Include="Configuration\EntitiesConfiguration\MovimentacaoMap.cs" />
-    <Compile Include="Configuration\UnitOfWork.cs" />
-    <Compile Include="Configuration\VNextContext.cs" />
+    <Compile Include="Abstract\EntityBase.cs" />
+    <Compile Include="Exceptions\ValorNegativoException.cs" />
+    <Compile Include="Interfaces\Repository\IRepository.cs" />
+    <Compile Include="Interfaces\UoW\IUnitOfWork.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Repositories\Commom\Repository.cs" />
-    <Compile Include="Repositories\DespesaRepository.cs" />
-    <Compile Include="Repositories\ReceitaRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\vNext_Durandal.Business\vNext_Durandal.Business.csproj">
-      <Project>{BBE4DA26-4FE0-4B66-BA90-E1CE4D64CED7}</Project>
-      <Name>vNext_Durandal.Business</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\vNext_Durandal.Commom\vNext_Durandal.Commom.csproj">
-      <Project>{9A15B05F-AFD6-43AD-B525-A7B5D9596EF6}</Project>
-      <Name>vNext_Durandal.Commom</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
