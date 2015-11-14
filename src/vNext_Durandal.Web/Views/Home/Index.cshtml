@@ -1,0 +1,31 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Asp.NET 5 - Durandal</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <link rel="stylesheet" href="Assets/styles/vendor/css/vendor.min.css">
+    <link rel="stylesheet" href="Assets/styles/app.css">
+</head>
+<body>
+    <div id="applicationHost">
+        @Html.Partial("_splash")
+    </div>
+
+
+    @*@Scripts.Render("~/Scripts/vendor")
+        @Scripts.Render("~/Scripts/App")*@
+
+    <script type="text/javascript" src="Assets/scripts/vendor.bundled.js"></script>
+    <script type="text/javascript" src="/Assets/scripts/vendor/require.js" data-main="/main"></script>
+</body>
+</html>
