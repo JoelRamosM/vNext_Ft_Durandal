@@ -2,13 +2,8 @@
     var self = this;
     this.routes_structure = ko.observableArray(
     [
-        {
-            "route": "",
-            "title": "Home",
-            "moduleId": "viewmodels/home/home",
-            "nav": true,
-            "classIcon": "fa-home"
-        }
+        { "route": "", "title": "Home", "moduleId": "viewmodels/home/home", "nav": true },
+        { "route": "receitas", "title": "Receitas", "moduleId": "viewmodels/receitas/receitas", "nav": true }
     ]
     );
     return {
