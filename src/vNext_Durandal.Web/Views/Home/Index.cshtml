@@ -5,7 +5,6 @@
 <html>
 <head>
     <title>Asp.NET 5 - Durandal</title>
-
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -21,11 +20,10 @@
         @Html.Partial("_splash")
     </div>
 
-
     @*@Scripts.Render("~/Scripts/vendor")
         @Scripts.Render("~/Scripts/App")*@
-
     <script type="text/javascript" src="Assets/scripts/vendor.bundled.js"></script>
+    <script type="text/javascript" src="Assets/scripts/app.bundled.js"></script>
     <script type="text/javascript" src="/Assets/scripts/vendor/require.js" data-main="/main"></script>
 </body>
 </html>

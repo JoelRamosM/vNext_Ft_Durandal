@@ -19,12 +19,15 @@ namespace vNextDurandal.Data.Configuration
         }
 
         public void Start()
-            => transaction = transaction ?? Context.Database.BeginTransaction();
+        {
+              //=> transaction = transaction ?? Context.Database.BeginTransaction();
+        }
+          
 
         public void Save()
         {
             if (_isDisposed) return;
-            transaction.Commit();
+            //transaction.Commit();
             Context.SaveChanges();
         }
 

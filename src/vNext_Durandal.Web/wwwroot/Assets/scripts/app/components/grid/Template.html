@@ -1,0 +1,36 @@
+﻿
+<button class="btn btn-danger" type="button" data-bind="enable: selectedRows().length , click: deleteItem">
+    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Excluir
+</button>
+<button class="btn btn-primary" type="button" role="presentation" data-bind="visible:selectedRows().length">
+    Selecionados <span class="badge" data-bind="text: selectedRows().length"></span>
+</button>
+<div class="table-responsive">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <td class="col-sm-1 text-center"><input type="checkbox" data-bind="checked: checkAll" /></td>
+                <!--ko foreach: collumns-->
+                <th data-bind="text:title"></th>
+                <!--/ko-->
+            </tr>
+        </thead>
+        <tbody data-bind="foreach: dataSource().dataSet">
+            <tr>
+                <td class="col-sm-1 text-center"><input type="checkbox" data-bind="value:$data.id, checked:$parent.selectedRows" /></td>
+                <!--ko foreach: $parent.collumns-->
+                <td data-bind="text: $parent[$data.prop], formatter: $data.format"></td>
+                <!--/ko-->
+            </tr>
+        </tbody>
+    </table>
+    <nav>
+        <ul class="pagination">
+            <li data-bind="css:{'disabled':!prevPageEnable()}"><a aria-label="Previous" data-bind="click:prev"><span aria-hidden="true">&laquo;</span></a></li>
+            <!--ko foreach: pages-->
+            <li data-bind="css:{'active': $data.current}"><a data-bind="text:$data.value, click: $parent.goToPage.bind($parent,$data.value)"> <span class="sr-only">(current)</span></a></li>
+            <!--/ko-->
+            <li data-bind="css:{'disabled':!nextPageEnable()}"><a aria-label="Next" data-bind="click:next"><span aria-hidden="true">&raquo;</span></a></li>
+        </ul>
+    </nav>
+</div>

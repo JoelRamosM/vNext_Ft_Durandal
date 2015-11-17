@@ -6,6 +6,7 @@
   bottom: 0;
   overflow-x: hidden;
   overflow-y: auto;
+  padding: 0 20px 0 20px;
 }
 section {
   margin: 0 20px;
@@ -16,6 +17,9 @@ section {
 }
 .navbar-nav li.loader.active {
   visibility: visible;
+}
+a {
+  cursor: pointer;
 }
 .splash {
   text-align: center;

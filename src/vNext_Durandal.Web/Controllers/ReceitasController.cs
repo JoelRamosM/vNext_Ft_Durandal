@@ -1,5 +1,9 @@
-﻿using Microsoft.AspNet.Mvc;
+﻿using System.Collections.Generic;
+using System.Linq;
+using Microsoft.AspNet.Mvc;
 using vNextDurandal.Business.Intefaces.BO;
+using vNextDurandal.Business.Models;
+using vNext_Durandal.Web.ViewModels;
 
 namespace vNext_Durandal.Web.Controllers
 {
@@ -23,9 +27,9 @@ namespace vNext_Durandal.Web.Controllers
         }
 
         [HttpGet("api/receitas")]
-        public JsonResult Get()
+        public JsonResult Get([FromQuery]GridRequest request)
         {
-            return new JsonResult(new { });
+            return new JsonResult(request.ToResult(receitaBO.Data()));
         }
 
         [HttpGet("api/receitas/{id}")]
@@ -34,6 +38,12 @@ namespace vNext_Durandal.Web.Controllers
             return new JsonResult(new { });
         }
 
+        [HttpDelete("api/receitas")]
+        public JsonResult Delete([FromForm]List<long> ids)
+        {
+            ids.ForEach(id => receitaBO.Delete(id));
+            return new JsonResult(new { });
+        }
         [HttpPost("api/receitas/novo")]
         public JsonResult Post()
         {

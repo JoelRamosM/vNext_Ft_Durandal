@@ -38,13 +38,13 @@ namespace vNextDurandal.Data.Repositories.Commom
         public void Delete(TEntity entity)
         {
             _uow.Context.Set<TEntity>().Remove(entity);
-            _uow.Context.SaveChanges();
+            _uow.SaveChanges();
         }
 
         public TEntity Update(TEntity entity)
         {
             _uow.Context.Set<TEntity>().Update(entity);
-            _uow.Context.SaveChanges();
+            _uow.SaveChanges();
             return entity;
         }
     }

@@ -4,6 +4,7 @@ using Microsoft.Data.Entity;
 using Microsoft.Dnx.Runtime;
 using Microsoft.Framework.Configuration;
 using Microsoft.Framework.DependencyInjection;
+using Newtonsoft.Json.Serialization;
 using vNextDurandal.Business.BO;
 using vNextDurandal.Business.Intefaces.BO;
 using vNextDurandal.Business.Intefaces.Repository;
@@ -28,7 +29,10 @@ namespace vNext_Durandal.Web
         }
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc();
+            services.AddMvc().AddJsonOptions(config =>
+            {
+                config.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+            });
             services.AddEntityFramework()
                 .AddSqlServer()
                 .AddDbContext<VNextContext>(option =>
