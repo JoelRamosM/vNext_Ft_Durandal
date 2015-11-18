@@ -1,2 +1,3 @@
-﻿require("./grid/Register");
+﻿require("./page-control/Register");
+require("./grid/Register");
 ko.applyBindings({});

@@ -4,30 +4,24 @@ function GridViewModel(params) {
     var self = this;
     this.name = ko.observable(params.name);
 
+    this.onRefresh = function () {
+        console.log("refreshed!!k");
+    };
+
+    this.withDeleteAction = ko.observable(params.withDeleteAction || (params.withDeleteAction == undefined || params.withDeleteAction == null));
+
     this.collumns = ko.observableArray(params.collumns);
 
-    this.dataSource = ko.observable(new GridDataSource({ url: params.url, defaultAction: params.defaulAction }));
+    this.dataSource = ko.observable(new GridDataSource({ url: params.url, defaultAction: params.defaulAction, onRefresh: this.onRefresh.bind(this) }));
 
     this.selectedRows = ko.observableArray([]);
 
-
-    this.pages = ko.computed(function () {
-        var result = [];
-        var totalPages = this.dataSource().gridRequest().totalPages();
-        var currentPage = this.dataSource().gridRequest().currentPage();
-        for (var i = 0; i < totalPages; i++)
-            result.push({ value: i + 1, current: i + 1 === currentPage });
-
-        return result;
+    this.totalPages = ko.computed(function () {
+        return this.dataSource().gridRequest().totalPages();
     }, this);
 
-    this.prevPageEnable = ko.computed(function () {
-        return this.dataSource().gridRequest().currentPage() > 1;
-    }, this);
-
-    this.nextPageEnable = ko.computed(function () {
-        var gridRequest = this.dataSource().gridRequest();
-        return gridRequest.currentPage() < gridRequest.totalPages();
+    this.currentPage = ko.computed(function () {
+        return this.dataSource().gridRequest().currentPage();
     }, this);
 
     this.checkAll = ko.computed({
@@ -46,8 +40,15 @@ function GridViewModel(params) {
         owner: this
     });
 
+
     this.dataSource().refresh();
 };
+
+
+
+GridViewModel.prototype.refresh = function () {
+    this.dataSource().refresh();
+}
 
 GridViewModel.prototype.goToPage = function (pageNumber) {
     this.dataSource().goto(pageNumber);
@@ -61,7 +62,7 @@ GridViewModel.prototype.prev = function () {
 };
 
 GridViewModel.prototype.deleteItem = function () {
-    this.dataSource().delete(this.selectedRows(), function (response) { console.log(response); });
+    this.dataSource().delete(this.selectedRows(), this.refresh.bind(this));
 };
 
 module.exports = GridViewModel;

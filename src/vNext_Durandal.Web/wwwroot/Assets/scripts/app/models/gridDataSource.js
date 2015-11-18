@@ -16,6 +16,12 @@ function GridDataSource(data) {
     }, this);
 
     this.selected = ko.observableArray();
+
+    this.onRefresh = new ko.subscribable();
+
+    this.onRefresh.subscribe(function () {
+        data.onRefresh(this.gridRequest().data());
+    }, this);
 };
 
 GridDataSource.prototype.next = function () {
@@ -33,15 +39,16 @@ GridDataSource.prototype.goto = function (page) {
 };
 
 GridDataSource.prototype.delete = function (ids, onDelete) {
-    ajaxRequest._delete("api/receitas", {ids:ids}, onDelete);
+    ajaxRequest._delete("api/receitas", { ids: ids }, onDelete);
 };
 
 GridDataSource.prototype.refresh = function () {
     var self = this;
     var params = $.param(ko.toJS(this.gridRequest()));
-    ajaxRequest.get("api/receitas", params,
+    ajaxRequest.get(this.url(), params,
         function (response) {
             self.gridRequest(new GridRequest(response));
+            self.onRefresh.notifySubscribers();
         });
 };
 module.exports = GridDataSource;
