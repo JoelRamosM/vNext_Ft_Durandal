@@ -1,9 +1,9 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
-
+require("./extensions/doubleClickBindHandler.js");
 require("./extensions/formatterBindHandler.js");
 require("./components/register-all.js");
 
-},{"./components/register-all.js":8,"./extensions/formatterBindHandler.js":9}],2:[function(require,module,exports){
+},{"./components/register-all.js":8,"./extensions/doubleClickBindHandler.js":9,"./extensions/formatterBindHandler.js":10}],2:[function(require,module,exports){
 ko.components.register("grid", {
     viewModel: require("./ViewModel.js"),
     template: require("./Template.html")
@@ -80,7 +80,7 @@ GridViewModel.prototype.deleteItem = function () {
 };
 
 module.exports = GridViewModel;
-},{"../../models/gridDataSource":11}],5:[function(require,module,exports){
+},{"../../models/gridDataSource":12}],5:[function(require,module,exports){
 ko.components.register("page-control", {
     viewModel: require("./ViewModel.js"),
     template: require("./Template.html")
@@ -176,6 +176,15 @@ require("./page-control/Register");
 require("./grid/Register");
 ko.applyBindings({});
 },{"./grid/Register":2,"./page-control/Register":5}],9:[function(require,module,exports){
+ko.bindingHandlers["doubleClick"] = {
+    init: function (element, valueAccessor, allBindings, viewModel, bindingContext) {
+        var handler = ko.unwrap(valueAccessor());
+        $(element).on("dblClick", function (e) {
+            handler.call(viewModel, bindingContext.$data, e);
+        });
+    }
+};
+},{}],10:[function(require,module,exports){
 ko.bindingHandlers["formatter"] = {
     init: function () {
 
@@ -199,7 +208,7 @@ ko.bindingHandlers["formatter"] = {
     }
 
 };
-},{}],10:[function(require,module,exports){
+},{}],11:[function(require,module,exports){
 function request(method, url, params, done, fail, aways) {
     var xhr = $.ajax({ method: method, url: url, data: params })
                   .done(done)
@@ -217,7 +226,7 @@ module.exports = {
     }
 
 };
-},{}],11:[function(require,module,exports){
+},{}],12:[function(require,module,exports){
 var GridRequest = require("./gridRequest");
 var ajaxRequest = require("./ajax-request");
 function GridDataSource(data) {
@@ -274,7 +283,7 @@ GridDataSource.prototype.refresh = function () {
 module.exports = GridDataSource;
 
 
-},{"./ajax-request":10,"./gridRequest":12}],12:[function(require,module,exports){
+},{"./ajax-request":11,"./gridRequest":13}],13:[function(require,module,exports){
 function GridRequest(data) {
     data = data || {};
     this.pageLength = ko.observable(data.pageLength || 10);
