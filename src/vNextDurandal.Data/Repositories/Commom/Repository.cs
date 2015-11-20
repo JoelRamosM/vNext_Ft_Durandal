@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using vNextDurandal.Commom.Abstract;
@@ -41,8 +42,15 @@ namespace vNextDurandal.Data.Repositories.Commom
             _uow.SaveChanges();
         }
 
+        public void DeleteRange(List<long> ids)
+        {
+            _uow.Context.Set<TEntity>().RemoveRange(Filter(c => ids.Contains(c.Id)));
+            _uow.SaveChanges();
+        }
+
         public TEntity Update(TEntity entity)
         {
+            SetDefaultValues(entity);
             _uow.Context.Set<TEntity>().Update(entity);
             _uow.SaveChanges();
             return entity;

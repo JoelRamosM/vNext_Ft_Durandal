@@ -6,6 +6,7 @@ using vNextDurandal.Business.Intefaces.BO;
 using vNextDurandal.Business.Models;
 using vNextDurandal.Commom.Exceptions;
 using vNextDurandal.Commom.Interfaces.Repository;
+using vNextDurandal.Commom.Model;
 
 namespace vNextDurandal.Business.BO.Commom
 {
@@ -35,6 +36,9 @@ namespace vNextDurandal.Business.BO.Commom
 
         public virtual Movimentacao Find(long id) => _repository.Find(id);
 
+        public void Delete(List<long> ids) => _repository.DeleteRange(ids);
+
+
         public virtual IQueryable<Movimentacao> Data(Expression<Func<Movimentacao, bool>> filter = null)
             => filter == null ? _repository.List() : _repository.Filter(filter);
 
@@ -45,7 +49,7 @@ namespace vNextDurandal.Business.BO.Commom
         private static void ValidaValorNegativo(Movimentacao movimentacao)
         {
             if (movimentacao.Valor < 0)
-                throw new ValorNegativoException("Movimentação aceita somente valores positivos. Para diferenciar as naturezas insira uma receita ou despesa.");
+                throw new ValorNegativoException(new ErrorMessage(nameof(movimentacao.Valor), "Movimentação aceita somente valores positivos. Para diferenciar as naturezas insira uma receita ou despesa."));
         }
     }
 }

@@ -1,10 +1,12 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using AutoMapper;
 using Microsoft.AspNet.Mvc;
 using vNextDurandal.Business.Intefaces.BO;
 using vNextDurandal.Business.Models;
-using vNext_Durandal.Business.Enums;
+using vNextDurandal.Commom.Exceptions;
 using vNext_Durandal.Web.ViewModels;
+
 
 namespace vNext_Durandal.Web.Controllers
 {
@@ -15,6 +17,7 @@ namespace vNext_Durandal.Web.Controllers
         public ReceitasController(IReceitaBO receitaBO)
         {
             this.receitaBO = receitaBO;
+            Mapper.CreateMap<ReceitaViewModel, Movimentacao>();
         }
 
         public IActionResult Receitas()
@@ -42,27 +45,51 @@ namespace vNext_Durandal.Web.Controllers
         }
 
         [HttpGet("api/receitas/{id}")]
-        public JsonResult Get(long id)
+        public IActionResult Get(long id)
         {
-            return new JsonResult(new { });
+            var movimentacao = receitaBO.Find(id);
+            if (movimentacao == null)
+                return new HttpNotFoundResult();
+            return new JsonResult(movimentacao);
         }
 
         [HttpDelete("api/receitas")]
-        public JsonResult Delete([FromForm]List<long> ids)
+        public IActionResult Delete([FromForm]List<long> ids)
         {
-            ids.ForEach(id => receitaBO.Delete(id));
-            return new JsonResult(new { });
+            try
+            {
+                receitaBO.Delete(ids);
+                return new HttpOkResult();
+            }
+            catch (Exception)
+            {
+                return new BadRequestObjectResult(new VNextDurandalException("Ocorreu um erro ao deletar receita."));
+            }
         }
         [HttpPost("api/receitas")]
-        public JsonResult Post()
+        public IActionResult Post([FromBody]ReceitaViewModel receita)
         {
-            return new JsonResult(new { });
+            try
+            {
+                return new JsonResult(receitaBO.New(Mapper.Map<Movimentacao>(receita)));
+            }
+            catch (VNextDurandalException e)
+            {
+                return new BadRequestObjectResult(e.Errors);
+            }
         }
 
         [HttpPut("api/receitas")]
-        public JsonResult Put()
+        public IActionResult Put([FromBody]ReceitaViewModel receita)
         {
-            return new JsonResult(new { });
+            try
+            {
+                return new JsonResult(receitaBO.Update(Mapper.Map<Movimentacao>(receita)));
+            }
+            catch (VNextDurandalException e)
+            {
+                return new BadRequestObjectResult(e.Errors);
+            }
         }
 
 

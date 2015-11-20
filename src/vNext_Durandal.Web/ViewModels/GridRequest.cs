@@ -16,7 +16,7 @@ namespace vNext_Durandal.Web.ViewModels
 
         public int TotalPages { get; set; }
 
-        public int SkipCount() => CurrentPage == 1 ? 0 : PageLength * (CurrentPage-1);
+        public int SkipCount() => CurrentPage == 1 ? 0 : PageLength * (CurrentPage - 1);
 
 
         public List<object> Data { get; set; }
@@ -24,7 +24,9 @@ namespace vNext_Durandal.Web.ViewModels
 
         public GridRequest ToResult<T>(IQueryable<T> data)
         {
-            TotalPages = ((data.Count() + PageLength - 1 )/ PageLength);
+            TotalPages = ((data.Count() + PageLength - 1) / PageLength);
+            if (TotalPages <= CurrentPage)
+                CurrentPage = TotalPages;
             Data = data.ToList().Skip(SkipCount()).Take(PageLength).Select(t => t as object).ToList();
             return this;
         }

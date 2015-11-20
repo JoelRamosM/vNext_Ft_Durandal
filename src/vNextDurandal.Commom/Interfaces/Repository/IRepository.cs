@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using vNextDurandal.Commom.Abstract;
@@ -25,5 +26,6 @@ namespace vNextDurandal.Commom.Interfaces.Repository
         void Delete(TEntity entity);
 
         TEntity Update(TEntity entity);
+        void DeleteRange(List<long> ids);
     }
 }

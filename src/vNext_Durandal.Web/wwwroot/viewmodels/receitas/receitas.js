@@ -1,6 +1,6 @@
 ﻿define(["knockout", "plugins/router", "plugins/http"], function (ko, router, http) {
 
-    function ctor() {
+    function ReceitaViewModel() {
         this.gridUrl = "api/receitas";
         this.title = ko.observable("Receitas");
         this.receitas = ko.observableArray([]);
@@ -8,11 +8,17 @@
         this.collumns = [{ title: "Tipo", prop: "tipo" }, { title: "Valor", prop: "valor", format: "money" }];
 
     };
-    ctor.prototype.activate = function () {
+
+    ReceitaViewModel.prototype.activate = function () {
 
     }
-    ctor.prototype.defaultAction = function (id) {
-        router.navigate("" + "/" + id);
+
+    ReceitaViewModel.prototype.newAction = function () {
+        router.navigate("receita#new");
     }
-    return ctor;
+
+    ReceitaViewModel.prototype.defaultAction = function (id) {
+        router.navigate("receita/" + id + "#edit");
+    }
+    return ReceitaViewModel;
 });

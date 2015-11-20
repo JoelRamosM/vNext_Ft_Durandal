@@ -1,9 +1,10 @@
 ﻿using System;
+using vNextDurandal.Commom.Model;
 
 namespace vNextDurandal.Commom.Exceptions
 {
-    public class ValorNegativoException : Exception
+    public class ValorNegativoException : VNextDurandalException
     {
-        public ValorNegativoException(string msg) : base(msg) { }
+        public ValorNegativoException(ErrorMessage msg) : base(msg) { }
     }
 }

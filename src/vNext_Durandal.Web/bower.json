@@ -11,8 +11,11 @@
   "dependencies": {
     "jquery": "~2.1.4",
     "knockout": "~3.3.0",
-    "durandal": "~2.1.0",
-    "bootstrap": "~3.3.5"
+    "bootstrap": "~3.3.5",
+    "Durandal": "durandal#~2.1.0",
+    "toastr": "~2.1.2",
+    "moment": "~2.10.6",
+    "jqueryui-datepicker": "~0.0.3"
   },
   "resolutions": {
     "jquery": ">= 1.9.1"

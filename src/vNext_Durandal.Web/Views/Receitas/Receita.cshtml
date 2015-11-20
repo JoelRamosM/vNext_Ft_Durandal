@@ -1,6 +1,19 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-    // ViewBag.Title = "Home Page";
-}
+﻿
+
+<form data-bind="with: model">
+    <fieldset class="form-group">
+        <label for="data">Data</label>
+        <input type="text" id="data" class="form-control" data-bind="value: data" />
+    </fieldset>
+    <fieldset class="form-group">
+        <label for="valor">Valor</label>
+        <input type="text" id="valor" class="form-control" data-bind="value: valor" placeholder="Valor" />
+    </fieldset>
+    <fieldset class="form-group">
+        <label for="obs">Observação</label>
+        <textarea style="resize: none;" id="obs" class="form-control" data-bind="value: observacao"></textarea>
+    </fieldset>
+    <button class="btn btn-success" data-bind="click: $parent.save.bind($parent)">
+        <span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Salvar
+    </button>
+</form>

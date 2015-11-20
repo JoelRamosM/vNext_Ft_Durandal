@@ -24,17 +24,24 @@ var vendor_style_dest = "wwwroot/Assets/styles/vendor";
 var app_style_dest = "wwwroot/Assets/styles";
 
 var vendors_scripts_files_srcs = ["bower_components/knockout/dist/knockout.js",
-                                    "bower_components/jquery/jquery.min.js",
+                                    "bower_components/jquery/dist/jquery.min.js",
+                                    "bower_components/jqueryui-datepicker/datepicker.js",
+                                    "bower_components/jqueryui-datepicker/core.js",
+                                    "bower_components/jqueryui-datepicker/i18n/datepicker-pt-BR.js",
                                     "bower_components/bootstrap/dist/js/bootstrap.min.js",
                                     "bower_components/requirejs/require.js",
                                     "bower_components/requirejs-text/text.js",
-                                    "bower_components/toastr/toastr.min.js"];
+                                    "bower_components/moment/min/moment.min.js",
+                                    "bower_components/toastr/toastr.js"
+
+];
+
 var vendors_styles_files_srcs = [
         "bower_components/bootstrap/dist/css/bootstrap.min.css",
         "bower_components/bootstrap/dist/css/bootstrap-theme.min.css",
         "bower_components/durandal/css/durandal.css",
-        "bower_components/font-awesome/css/font-awesome.min.css",
         "bower_components/toastr/toastr.min.css"
+
 
 ];
 
@@ -98,7 +105,10 @@ function prepareVendorFonts() {
 
 function bundleVendorScripts() {
     util.log(util.colors.green("STARTING BUNDLING VENDOR SCRIPTS...."));
-    return browserify({ entries: ["wwwroot/Assets/scripts/vendor/all.js"] })
+
+    return browserify({ entries: ["wwwroot/Assets/scripts/vendor/all.js"], noParse: ["./bower_components/jqueri-ui/ui/minified/datepicker.min.js"] })
+                        .require("./wwwroot/Assets/scripts/vendor/jquery.min.js", { expose: "jquery" })
+                        .require("./wwwroot/Assets/scripts/vendor/moment.min.js", { expose: "moment" })
                         .bundle()
                         .pipe(source("vendor.bundled.js"))
                         .pipe(gulp.dest("wwwroot/Assets/scripts"))

@@ -9,7 +9,7 @@ ko.components.register("grid", {
     template: require("./Template.html")
 });
 },{"./Template.html":3,"./ViewModel.js":4}],3:[function(require,module,exports){
-module.exports = "﻿\r\n<button class=\"btn btn-danger\" type=\"button\" data-bind=\"visible:withDeleteAction, enable: selectedRows().length , click: deleteItem\">\r\n    <span class=\"glyphicon glyphicon-remove\" aria-hidden=\"true\"></span> Excluir\r\n    <span class=\"badge\" data-bind=\"visible:selectedRows().length, text: selectedRows().length\"></span>\r\n</button>\r\n<!--<button class=\"btn btn-primary disabled\" type=\"button\" role=\"presentation\" data-bind=\"visible:selectedRows().length\">\r\n    Selecionados <span class=\"badge\" data-bind=\"text: selectedRows().length\"></span>\r\n</button>-->\r\n<div class=\"table-responsive\">\r\n    <table class=\"table table-bordered\">\r\n        <thead>\r\n            <tr>\r\n                <td class=\"col-sm-1 text-center\"><input type=\"checkbox\" data-bind=\"checked: checkAll\" /></td>\r\n                <!--ko foreach: collumns-->\r\n                <th data-bind=\"text:title\"></th>\r\n                <!--/ko-->\r\n            </tr>\r\n        </thead>\r\n        <tbody data-bind=\"foreach: dataSource().dataSet\">\r\n            <tr>\r\n                <td class=\"col-sm-1 text-center\"><input type=\"checkbox\" data-bind=\"value:$data.id, checked:$parent.selectedRows\" /></td>\r\n                <!--ko foreach: $parent.collumns-->\r\n                <td data-bind=\"text: $parent[$data.prop], formatter: $data.format\"></td>\r\n                <!--/ko-->\r\n            </tr>\r\n        </tbody>\r\n    </table>\r\n    <page-control params=\"{totalPages: totalPages, currentPage: currentPage, onGoTo: goToPage.bind($data), onNext: next.bind($data), onPrev:prev.bind($data)}\"></page-control>\r\n</div>";
+module.exports = "﻿\r\n\r\n<div classs=\"btn-group\">\r\n    <!--ko if: withDeleteAction-->\r\n    <button class=\"btn btn-danger\" type=\"button\" data-bind=\"enable: selectedRows().length , click: deleteItem\">\r\n        <span class=\"glyphicon glyphicon-remove\" aria-hidden=\"true\"></span> Excluir\r\n        <span class=\"badge\" data-bind=\"visible:selectedRows().length, text: selectedRows().length\"></span>\r\n    </button>\r\n    <!--/ko-->\r\n    <!--ko if: withCreateAction-->\r\n    <button class=\"btn btn-success\" data-bind=\"click: newItem\">\r\n        <span class=\"glyphicon glyphicon-plus\" aria-hidden=\"true\"></span> Novo\r\n    </button>\r\n    <!--/ko-->\r\n</div>\r\n\r\n\r\n<div class=\"table-responsive\">\r\n    <table class=\"table table-bordered\">\r\n        <thead>\r\n            <tr>\r\n                <!--ko if: isMultiSelect-->\r\n                <td class=\"col-sm-1 text-center\"><input type=\"checkbox\" data-bind=\"checked: checkAll\" /></td>\r\n                <!--/ko-->\r\n                <!--ko foreach: collumns-->\r\n                <th data-bind=\"text:title\"></th>\r\n                <!--/ko-->\r\n            </tr>\r\n        </thead>\r\n        <tbody data-bind=\"foreach: dataSource().dataSet\">\r\n            <tr data-bind=\"doubleClick: $parent.defaultAction.bind($parent)\">\r\n                <!--ko if: $parent.isMultiSelect-->\r\n                <td class=\"col-sm-1 text-center\"><input type=\"checkbox\" data-bind=\"value:$data.id, checked:$parent.selectedRows\" /></td>\r\n                <!--/ko-->\r\n                <!--ko foreach: $parent.collumns-->\r\n                <td data-bind=\"text: $parent[$data.prop], formatter: $data.format\"></td>\r\n                <!--/ko-->\r\n            </tr>\r\n        </tbody>\r\n    </table>\r\n    <page-control params=\"{totalPages: totalPages, currentPage: currentPage, onGoTo: goToPage.bind($data), onNext: next.bind($data), onPrev:prev.bind($data)}\"></page-control>\r\n</div>";
 
 },{}],4:[function(require,module,exports){
 var GridDataSource = require("../../models/gridDataSource");
@@ -18,18 +18,24 @@ function GridViewModel(params) {
     var self = this;
     this.name = ko.observable(params.name);
 
+
     this.onRefresh = function () {
         console.log("refreshed!!k");
     };
 
     this.withDeleteAction = ko.observable(params.withDeleteAction || (params.withDeleteAction == undefined || params.withDeleteAction == null));
+    this.withCreateAction = ko.observable(params.withCreateAction || ((params.withCreateAction == undefined || params.withCreateAction == null) && params.createAction));
+    this.isMultiSelect = ko.observable(params.isMultiSelect || (params.isMultiSelect == undefined || params.isMultiSelect == null));
+
+    this.defaulActionCallback = params.defaultAction;
+    this.createActionCallback = params.createAction;
 
     this.collumns = ko.observableArray(params.collumns);
 
     this.dataSource = ko.observable(new GridDataSource({ url: params.url, defaultAction: params.defaulAction, onRefresh: this.onRefresh.bind(this) }));
 
     this.selectedRows = ko.observableArray([]);
-
+    //TODO: selected rows on current page
     this.totalPages = ko.computed(function () {
         return this.dataSource().gridRequest().totalPages();
     }, this);
@@ -57,8 +63,13 @@ function GridViewModel(params) {
 
     this.dataSource().refresh();
 };
-
-
+GridViewModel.prototype.newItem = function () {
+    this.createActionCallback && this.createActionCallback();
+}
+GridViewModel.prototype.defaultAction = function (rowObject) {
+    console.log("default action:", rowObject);
+    this.defaulActionCallback && this.defaulActionCallback(rowObject["id"]);
+}
 
 GridViewModel.prototype.refresh = function () {
     this.dataSource().refresh();
@@ -77,6 +88,7 @@ GridViewModel.prototype.prev = function () {
 
 GridViewModel.prototype.deleteItem = function () {
     this.dataSource().delete(this.selectedRows(), this.refresh.bind(this));
+    this.selectedRows.removeAll();
 };
 
 module.exports = GridViewModel;
@@ -178,9 +190,9 @@ ko.applyBindings({});
 },{"./grid/Register":2,"./page-control/Register":5}],9:[function(require,module,exports){
 ko.bindingHandlers["doubleClick"] = {
     init: function (element, valueAccessor, allBindings, viewModel, bindingContext) {
-        var handler = ko.unwrap(valueAccessor());
-        $(element).on("dblClick", function (e) {
-            handler.call(viewModel, bindingContext.$data, e);
+        var handler = valueAccessor.bind(bindingContext)();
+        $(element).on("dblclick", function (e) {
+            handler(viewModel, e);
         });
     }
 };
