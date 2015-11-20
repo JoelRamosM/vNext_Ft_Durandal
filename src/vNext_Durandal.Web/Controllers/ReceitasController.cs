@@ -5,6 +5,7 @@ using Microsoft.AspNet.Mvc;
 using vNextDurandal.Business.Intefaces.BO;
 using vNextDurandal.Business.Models;
 using vNextDurandal.Commom.Exceptions;
+using vNext_Durandal.Web.OutputModels;
 using vNext_Durandal.Web.ViewModels;
 
 
@@ -20,29 +21,12 @@ namespace vNext_Durandal.Web.Controllers
             Mapper.CreateMap<ReceitaViewModel, Movimentacao>();
         }
 
-        public IActionResult Receitas()
-        {
-            return View();
-        }
+        public IActionResult Receitas() => View();
 
-        public IActionResult Receita()
-        {
-            return View();
-        }
+        public IActionResult Receita() => View();
 
         [HttpGet("api/receitas")]
-        public JsonResult Get([FromQuery]GridRequest request)
-        {
-            //var x = Enumerable.Range(0, 100).Select(i => new Movimentacao
-            //{
-            //    Tipo = (TipoMovimentacao)1,
-            //    Observacao = i.ToString(),
-            //    Valor = i,
-            //    Id = i
-            //}).AsQueryable();
-
-            return new JsonResult(request.ToResult(receitaBO.Data()));
-        }
+        public JsonResult Get([FromQuery]GridRequest request) => new JsonResult(request.ToResult(receitaBO.Data()));
 
         [HttpGet("api/receitas/{id}")]
         public IActionResult Get(long id)
@@ -63,7 +47,7 @@ namespace vNext_Durandal.Web.Controllers
             }
             catch (Exception)
             {
-                return new BadRequestObjectResult(new VNextDurandalException("Ocorreu um erro ao deletar receita."));
+                return new BadRequestObjectResult(new ErrorResult("Ocorreu um erro ao deletar receita."));
             }
         }
         [HttpPost("api/receitas")]
@@ -75,7 +59,7 @@ namespace vNext_Durandal.Web.Controllers
             }
             catch (VNextDurandalException e)
             {
-                return new BadRequestObjectResult(e.Errors);
+                return new BadRequestObjectResult(new ErrorResult(e));
             }
         }
 
@@ -88,7 +72,7 @@ namespace vNext_Durandal.Web.Controllers
             }
             catch (VNextDurandalException e)
             {
-                return new BadRequestObjectResult(e.Errors);
+                return new BadRequestObjectResult(new ErrorResult(e));
             }
         }
 

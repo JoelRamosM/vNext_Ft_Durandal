@@ -7,4 +7,6 @@
 
 <h2 data-bind="text: title"></h2>
 
-<grid params="{name:'Teste',url:gridUrl, collumns: collumns, defaultAction: defaultAction,createAction:newAction}"></grid>
+<crud-bar params="{crudBarAPI: crudBarAPI, onNew: onNew, onDelete: onDelete.bind($data), withEditAction: false}"></crud-bar>
+
+<grid params="{name:'Teste',url:gridUrl, collumns: collumns, defaultAction: defaultAction.bind($data), gridAPI:gridAPI}"></grid>

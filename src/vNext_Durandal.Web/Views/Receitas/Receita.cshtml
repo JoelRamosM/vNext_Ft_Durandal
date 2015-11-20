@@ -13,7 +13,12 @@
         <label for="obs">Observação</label>
         <textarea style="resize: none;" id="obs" class="form-control" data-bind="value: observacao"></textarea>
     </fieldset>
-    <button class="btn btn-success" data-bind="click: $parent.save.bind($parent)">
-        <span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Salvar
-    </button>
+    <div classs="btn-group">
+        <button class="btn btn-success" data-bind="click: $parent.save.bind($parent)">
+            <span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Salvar
+        </button>
+        <button class="btn btn-danger" type="button" data-bind="click: $parent.cancel.bind($parent)">
+            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Cancelar
+        </button>
+    </div>
 </form>

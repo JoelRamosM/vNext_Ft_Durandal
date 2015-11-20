@@ -14,23 +14,23 @@
 
         promisse.then(function () {
             router.navigate("receitas");
-        })
+        });
     };
 
     ReceitaViewModel.prototype.cancel = function () {
-
+        router.navigate("receitas");
     };
 
     ReceitaViewModel.prototype.activate = function (id) {
         var self = this;
-        if (id) {
+        if (id)
             http.get("api/receitas/" + id).then(function (response) {
                 self.model(new Receita(response));
             });
 
-        } else {
+        else
             this.title("Novo");
-        }
+
     };
 
     ReceitaViewModel.prototype.attached = function () {

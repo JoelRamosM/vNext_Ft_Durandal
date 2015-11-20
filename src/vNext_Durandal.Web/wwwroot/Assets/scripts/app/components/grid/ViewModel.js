@@ -1,24 +1,23 @@
 ﻿var GridDataSource = require("../../models/gridDataSource");
+var apiBuilder = require("../../models/api/ApiGridBuilder");
 function GridViewModel(params) {
     params = params || {};
     var self = this;
     this.name = ko.observable(params.name);
 
 
-    this.onRefresh = function () {
-        console.log("refreshed!!k");
-    };
+    this.onRefresh = new ko.subscribable();
 
-    this.withDeleteAction = ko.observable(params.withDeleteAction || (params.withDeleteAction == undefined || params.withDeleteAction == null));
-    this.withCreateAction = ko.observable(params.withCreateAction || ((params.withCreateAction == undefined || params.withCreateAction == null) && params.createAction));
+    this.onRefreshCallback = function (data) {
+        this.onRefresh.notifySubscribers(data);
+    }
     this.isMultiSelect = ko.observable(params.isMultiSelect || (params.isMultiSelect == undefined || params.isMultiSelect == null));
 
     this.defaulActionCallback = params.defaultAction;
-    this.createActionCallback = params.createAction;
 
     this.collumns = ko.observableArray(params.collumns);
 
-    this.dataSource = ko.observable(new GridDataSource({ url: params.url, defaultAction: params.defaulAction, onRefresh: this.onRefresh.bind(this) }));
+    this.dataSource = ko.observable(new GridDataSource({ url: params.url, defaultAction: params.defaulAction, onRefresh: this.onRefreshCallback.bind(this) }));
 
     this.selectedRows = ko.observableArray([]);
     //TODO: selected rows on current page
@@ -46,18 +45,20 @@ function GridViewModel(params) {
         owner: this
     });
 
+    params.gridAPI && ko.isObservable(params.gridAPI) ? params.gridAPI(apiBuilder(this)) : params.gridAPI = apiBuilder(this);
 
     this.dataSource().refresh();
 };
-GridViewModel.prototype.newItem = function () {
-    this.createActionCallback && this.createActionCallback();
-}
+
 GridViewModel.prototype.defaultAction = function (rowObject) {
     console.log("default action:", rowObject);
     this.defaulActionCallback && this.defaulActionCallback(rowObject["id"]);
 }
 
 GridViewModel.prototype.refresh = function () {
+    this.dataSource().refresh();
+}
+GridViewModel.prototype.filter = function () {
     this.dataSource().refresh();
 }
 
@@ -68,13 +69,9 @@ GridViewModel.prototype.goToPage = function (pageNumber) {
 GridViewModel.prototype.next = function () {
     this.dataSource().next();
 };
+
 GridViewModel.prototype.prev = function () {
     this.dataSource().prev();
-};
-
-GridViewModel.prototype.deleteItem = function () {
-    this.dataSource().delete(this.selectedRows(), this.refresh.bind(this));
-    this.selectedRows.removeAll();
 };
 
 module.exports = GridViewModel;

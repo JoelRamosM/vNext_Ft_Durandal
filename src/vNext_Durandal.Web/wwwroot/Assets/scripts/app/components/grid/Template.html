@@ -1,21 +1,4 @@
-﻿
-
-<div classs="btn-group">
-    <!--ko if: withDeleteAction-->
-    <button class="btn btn-danger" type="button" data-bind="enable: selectedRows().length , click: deleteItem">
-        <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Excluir
-        <span class="badge" data-bind="visible:selectedRows().length, text: selectedRows().length"></span>
-    </button>
-    <!--/ko-->
-    <!--ko if: withCreateAction-->
-    <button class="btn btn-success" data-bind="click: newItem">
-        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Novo
-    </button>
-    <!--/ko-->
-</div>
-
-
-<div class="table-responsive">
+﻿<div class="table-responsive">
     <table class="table table-bordered">
         <thead>
             <tr>
