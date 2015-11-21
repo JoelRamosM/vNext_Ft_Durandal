@@ -1,12 +1,4 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-    ViewBag.Title = "Receitas";
-}
-
-<h2 data-bind="text: title"></h2>
-
+﻿
 <crud-bar params="{crudBarAPI: crudBarAPI, onNew: onNew, onDelete: onDelete.bind($data), withEditAction: false}"></crud-bar>
 
 <grid params="{name:'Teste',url:gridUrl, collumns: collumns, defaultAction: defaultAction.bind($data), gridAPI:gridAPI}"></grid>

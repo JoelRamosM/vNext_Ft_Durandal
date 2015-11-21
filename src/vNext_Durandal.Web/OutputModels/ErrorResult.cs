@@ -6,19 +6,25 @@ namespace vNext_Durandal.Web.OutputModels
 {
     public class ErrorResult
     {
-        public ErrorResult(string error)
+        public ErrorResult(string error, string title)
         {
             Errors = new List<ErrorMessage> { new ErrorMessage("Erro", error) };
+            Title = title;
         }
-        public ErrorResult(VNextDurandalException ex)
+        public ErrorResult(VNextDurandalException ex, string title = "Erro")
         {
             Errors = ex.Errors;
+            Title = title;
         }
-        public ErrorResult(List<ErrorMessage> errors)
+
+        public ErrorResult(List<ErrorMessage> errors, string title = "Erro")
         {
             Errors = errors;
+            Title = title;
         }
 
         public List<ErrorMessage> Errors { get; }
+
+        public string Title { get; set; }
     }
 }

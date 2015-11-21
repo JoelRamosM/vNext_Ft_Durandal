@@ -1,13 +1,26 @@
 ﻿define(["plugins/router", "plugins/http", "durandal/app"], function (router, http, app) {
     var self = this;
+
     this.routes_structure = ko.observableArray(
     [
         { "route": "", "title": "Home", "moduleId": "viewmodels/home/home", "nav": true },
         { "route": "receitas", "title": "Receitas", "moduleId": "viewmodels/receitas/receitas", "nav": true },
-        { "route": "receita#new", "title": "Receita", "moduleId": "viewmodels/receitas/receita" },
-        { "route": "receita(/:id)#edit", "title": "Receita", "moduleId": "viewmodels/receitas/receita" }
+        { "route": "receita#new", "title": "Nova Receita", "moduleId": "viewmodels/receitas/receita" },
+        { "route": "receita(/:id)#edit", "title": "Editar Receita", "moduleId": "viewmodels/receitas/receita" }
     ]
     );
+    var currentTitle = function () {
+        var route = router.routes.filter(function (r) {
+            return r.isActive();
+        })[0];
+        return route && route.title || "Home";
+    };
+    router.isNavigating.subscribe(function (val) {
+        var $titleEle = $("#currentTitle");
+        (!val && $titleEle) && $titleEle.text(currentTitle());
+
+    }, this);
+
     return {
         router: router,
         search: function () {

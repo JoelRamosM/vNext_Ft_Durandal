@@ -51,7 +51,6 @@ function GridViewModel(params) {
 };
 
 GridViewModel.prototype.defaultAction = function (rowObject) {
-    console.log("default action:", rowObject);
     this.defaulActionCallback && this.defaulActionCallback(rowObject["id"]);
 }
 

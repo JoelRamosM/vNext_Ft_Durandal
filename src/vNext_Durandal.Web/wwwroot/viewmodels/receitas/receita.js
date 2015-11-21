@@ -27,10 +27,6 @@
             http.get("api/receitas/" + id).then(function (response) {
                 self.model(new Receita(response));
             });
-
-        else
-            this.title("Novo");
-
     };
 
     ReceitaViewModel.prototype.attached = function () {

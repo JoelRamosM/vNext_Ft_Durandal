@@ -26,7 +26,7 @@ namespace vNext_Durandal.Web.Controllers
         public IActionResult Receita() => View();
 
         [HttpGet("api/receitas")]
-        public JsonResult Get([FromQuery]GridRequest request) => new JsonResult(request.ToResult(receitaBO.Data()));
+        public IActionResult Get([FromQuery]GridRequest request) => new HttpOkObjectResult(request.ToResult(receitaBO.Data()));
 
         [HttpGet("api/receitas/{id}")]
         public IActionResult Get(long id)
@@ -34,7 +34,7 @@ namespace vNext_Durandal.Web.Controllers
             var movimentacao = receitaBO.Find(id);
             if (movimentacao == null)
                 return new HttpNotFoundResult();
-            return new JsonResult(movimentacao);
+            return new HttpOkObjectResult(movimentacao);
         }
 
         [HttpDelete("api/receitas")]
@@ -47,7 +47,7 @@ namespace vNext_Durandal.Web.Controllers
             }
             catch (Exception)
             {
-                return new BadRequestObjectResult(new ErrorResult("Ocorreu um erro ao deletar receita."));
+                return new BadRequestObjectResult(new ErrorResult("Ocorreu um erro ao deletar receita.", "Deletar Receita"));
             }
         }
         [HttpPost("api/receitas")]
@@ -55,11 +55,11 @@ namespace vNext_Durandal.Web.Controllers
         {
             try
             {
-                return new JsonResult(receitaBO.New(Mapper.Map<Movimentacao>(receita)));
+                return new HttpOkObjectResult(receitaBO.New(Mapper.Map<Movimentacao>(receita)));
             }
             catch (VNextDurandalException e)
             {
-                return new BadRequestObjectResult(new ErrorResult(e));
+                return new BadRequestObjectResult(new ErrorResult(e, "Incluir Receita"));
             }
         }
 
@@ -72,10 +72,8 @@ namespace vNext_Durandal.Web.Controllers
             }
             catch (VNextDurandalException e)
             {
-                return new BadRequestObjectResult(new ErrorResult(e));
+                return new BadRequestObjectResult(new ErrorResult(e, "Alterar Receita"));
             }
         }
-
-
     }
 }

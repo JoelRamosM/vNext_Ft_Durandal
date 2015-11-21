@@ -10,9 +10,9 @@
 define("jquery", function () { return jQuery; });
 define("knockout", ko);
 
-define(["durandal/system", "durandal/app", "durandal/viewLocator"], function (system, app, viewLocator) {
+define(["durandal/system", "durandal/app", "durandal/viewLocator", "services/error-handler"], function (system, app, viewLocator) {
     //>>excludeStart("build", true);
-    system.debug(true);
+    system.debug(false);
     //>>excludeEnd("build");
 
     app.title = "Asp.Net 5 - Durandal";

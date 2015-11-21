@@ -1,10 +1,9 @@
 ﻿define(["knockout", "plugins/router", "plugins/http"], function (ko, router, http) {
-
     function ReceitaViewModel() {
         this.gridUrl = "api/receitas";
         this.title = ko.observable("Receitas");
         this.receitas = ko.observableArray([]);
-        this.collumns = [{ title: "Tipo", prop: "tipo" }, { title: "Valor", prop: "valor", format: "money" }];
+        this.collumns = [{ title: "Data", prop: "data", format:"date" }, { title: "Valor", prop: "valor", format: "money" }];
 
         this.gridAPI = ko.observable();
         this.crudBarAPI = ko.observable();
@@ -27,12 +26,10 @@
     ReceitaViewModel.prototype.onNew = function () {
         router.navigate("receita#new");
     };
-
     ReceitaViewModel.prototype.onEdit = function (id) {
         if (id)
             router.navigate("receita/" + id + "#edit");
     };
-
     ReceitaViewModel.prototype.onDelete = function () {
         var that = this;
         http.remove("api/receitas", { ids: this.gridAPI().selectedRows() }).then(function (response) {
@@ -40,7 +37,6 @@
             that.gridAPI().selectedRows.removeAll();
         });
     };
-
     ReceitaViewModel.prototype.defaultAction = function (id) {
         this.onEdit(id);
     };

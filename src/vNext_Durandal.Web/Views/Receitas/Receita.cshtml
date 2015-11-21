@@ -1,17 +1,16 @@
 ﻿
-
 <form data-bind="with: model">
     <fieldset class="form-group">
         <label for="data">Data</label>
-        <input type="text" id="data" class="form-control" data-bind="value: data" />
+        <input type="text" id="data" class="form-control" data-bind="datepicker:data" />
     </fieldset>
     <fieldset class="form-group">
         <label for="valor">Valor</label>
-        <input type="text" id="valor" class="form-control" data-bind="value: valor" placeholder="Valor" />
+        <input type="text" id="valor" class="form-control" data-bind="value: valor.formatted" placeholder="Valor" />
     </fieldset>
     <fieldset class="form-group">
         <label for="obs">Observação</label>
-        <textarea style="resize: none;" id="obs" class="form-control" data-bind="value: observacao"></textarea>
+        <textarea rows="5" style="resize: none;" id="obs" class="form-control" data-bind="value: observacao"></textarea>
     </fieldset>
     <div classs="btn-group">
         <button class="btn btn-success" data-bind="click: $parent.save.bind($parent)">

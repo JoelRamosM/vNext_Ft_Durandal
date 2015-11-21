@@ -14,6 +14,11 @@
             $(element).text(nvalue);
             return;
         }
+        if (format === "date") {
+            var nvalue = new Date(text).toLocaleDateString();
+            $(element).text(nvalue);
+            return;
+        }
         if (/function()/.test(format)) {
             var formatterFunction = eval("(" + format + ")");
             $(element).text(formatterFunction(text));
