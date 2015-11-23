@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Remotion.Linq.Parsing.Structure.IntermediateModel;
+using vNextDurandal.Commom.Services;
 
 namespace vNext_Durandal.Web.ViewModels
 {
@@ -19,7 +19,7 @@ namespace vNext_Durandal.Web.ViewModels
         public int SkipCount() => CurrentPage == 1 ? 0 : PageLength * (CurrentPage - 1);
 
 
-        public List<object> Data { get; set; }
+        public IEnumerable<object> Data { get; set; }
 
 
         public GridRequest ToResult<T>(IQueryable<T> data)

@@ -5,6 +5,7 @@ using System.Linq.Expressions;
 using vNextDurandal.Commom.Abstract;
 using vNextDurandal.Commom.Interfaces.Repository;
 using vNextDurandal.Commom.Interfaces.UoW;
+using vNextDurandal.Commom.Services;
 
 namespace vNextDurandal.Data.Repositories.Commom
 {
@@ -25,6 +26,10 @@ namespace vNextDurandal.Data.Repositories.Commom
         public TEntity Find(long id) => List().FirstOrDefault(e => e.Id == id);
 
         public IQueryable<TEntity> Filter(Expression<Func<TEntity, bool>> filter) => List().Where(filter);
+
+        public IQueryable<TEntity> Filter(string q) => List().Where(ExpressionService.Filter<TEntity>(q));
+
+
 
         public TEntity Include(TEntity entity)
         {
