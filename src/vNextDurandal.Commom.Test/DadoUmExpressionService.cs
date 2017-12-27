@@ -5,6 +5,7 @@ using Xunit;
 
 namespace vNextDurandal.Commom.Test
 {
+
     public class DadoUmExpressionService
     {
 
@@ -16,6 +17,7 @@ namespace vNextDurandal.Commom.Test
             var teste = x2.Where(ExpressionService.Filter<Teste>("1").Compile());
             Assert.Equal(1, teste.Count());
         }
+
     }
 
     public class Teste

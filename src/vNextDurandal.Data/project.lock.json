@@ -2180,7 +2180,7 @@
           "ref/dnxcore50/_._": {}
         }
       },
-      "System.Reflection/4.1.0-beta-23225": {
+      "System.Reflection/4.1.0-beta-23409": {
         "type": "package",
         "dependencies": {
           "System.IO": "4.0.0",
@@ -2628,7 +2628,8 @@
           "Microsoft.CSharp": "4.0.1-beta-23409",
           "System.Collections": "4.0.11-beta-23409",
           "System.Linq": "4.0.1-beta-23409",
-          "System.Reflection": "4.0.10",
+          "System.Reflection": "4.1.0-beta-23409",
+          "System.Reflection.TypeExtensions": "4.0.1-beta-23409",
           "System.Runtime": "4.0.21-beta-23409",
           "System.Threading": "4.0.11-beta-23409"
         }
@@ -6042,7 +6043,7 @@
           "ref/dnxcore50/_._": {}
         }
       },
-      "System.Reflection/4.1.0-beta-23225": {
+      "System.Reflection/4.1.0-beta-23409": {
         "type": "package",
         "dependencies": {
           "System.IO": "4.0.0",
@@ -6598,7 +6599,8 @@
           "Microsoft.CSharp": "4.0.1-beta-23409",
           "System.Collections": "4.0.11-beta-23409",
           "System.Linq": "4.0.1-beta-23409",
-          "System.Reflection": "4.0.10",
+          "System.Reflection": "4.1.0-beta-23409",
+          "System.Reflection.TypeExtensions": "4.0.1-beta-23409",
           "System.Runtime": "4.0.21-beta-23409",
           "System.Threading": "4.0.11-beta-23409"
         }
@@ -8186,7 +8188,7 @@
           "ref/dnxcore50/_._": {}
         }
       },
-      "System.Reflection/4.1.0-beta-23225": {
+      "System.Reflection/4.1.0-beta-23409": {
         "type": "package",
         "dependencies": {
           "System.IO": "4.0.0",
@@ -8742,7 +8744,8 @@
           "Microsoft.CSharp": "4.0.1-beta-23409",
           "System.Collections": "4.0.11-beta-23409",
           "System.Linq": "4.0.1-beta-23409",
-          "System.Reflection": "4.0.10",
+          "System.Reflection": "4.1.0-beta-23409",
+          "System.Reflection.TypeExtensions": "4.0.1-beta-23409",
           "System.Runtime": "4.0.21-beta-23409",
           "System.Threading": "4.0.11-beta-23409"
         }
@@ -11112,10 +11115,10 @@
         "System.Private.Uri.nuspec"
       ]
     },
-    "System.Reflection/4.1.0-beta-23225": {
+    "System.Reflection/4.1.0-beta-23409": {
       "type": "package",
       "serviceable": true,
-      "sha512": "WbLtaCxoe5XdqEyZuGpemSQ8YBJ8cj11zx+yxOxJfHbNrmu7oMQ29+J50swaqg3soUc3BVBMqfIhb/7gocDHQA==",
+      "sha512": "99kWOYZ+JsDAFUbmgprOUNZqFvKQPb8iOyWJuDNyo7dzhmtOmhMgGosGfNpiY9vAwq/q7fPLivzwEE2rdj+jkg==",
       "files": [
         "lib/DNXCore50/System.Reflection.dll",
         "lib/MonoAndroid10/_._",
@@ -11131,8 +11134,8 @@
         "ref/xamarinios10/_._",
         "ref/xamarinmac20/_._",
         "runtimes/win8-aot/lib/netcore50/System.Reflection.dll",
-        "System.Reflection.4.1.0-beta-23225.nupkg",
-        "System.Reflection.4.1.0-beta-23225.nupkg.sha512",
+        "System.Reflection.4.1.0-beta-23409.nupkg",
+        "System.Reflection.4.1.0-beta-23409.nupkg.sha512",
         "System.Reflection.nuspec"
       ]
     },
